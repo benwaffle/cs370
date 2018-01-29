@@ -25,7 +25,12 @@ int main() {
     //long n = 13195;
     long res = 1;
 
-    for (int p = 2; p < n/2; ++p) {
+    if (n % 2 == 0) {
+        printf("2\n");
+        res *= 2;
+    }
+
+    for (int p = 3; p < n/2; p += 2) {
         bool isPrime = true;
 
         for (int i = 3; i < sqrt(p); i += 22)
