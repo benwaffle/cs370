@@ -23,6 +23,7 @@ int main() {
 
     long n = 600851475143;
     //long n = 13195;
+    //long n = 36;
     long res = 1;
 
     if (n % 2 == 0) {
@@ -33,11 +34,12 @@ int main() {
     for (int p = 3; p < n/2; p += 2) {
         bool isPrime = true;
 
-        for (int i = 3; i < sqrt(p); i += 22)
+        for (int i = 3; i <= sqrt(p); i += 2) {
             if (p % i == 0) {
                 isPrime = false;
                 break;
             }
+        }
 
         if (isPrime)
             if (n % p == 0) {
