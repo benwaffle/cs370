@@ -31,10 +31,12 @@ int main() {
         res *= 2;
     }
 
-    for (int p = 3; p < n/2; p += 2) {
+    long lim = n/2;
+    for (int p = 3; p < lim; p += 2) {
         bool isPrime = true;
 
-        for (int i = 3; i <= sqrt(p); i += 2) {
+        long max = sqrt(p);
+        for (int i = 3; i <= max; i += 2) {
             if (p % i == 0) {
                 isPrime = false;
                 break;
