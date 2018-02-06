@@ -27,7 +27,8 @@ int main() {
         if (p == -1)
             continue;
 
-        int i = ceil((double)a / p) * p - 1;
+        int i = ceil((double)a / p) * p - a;
+        //printf("prime = %d, first index is %d (%d)\n", p, i, a+i);
         if (a <= p)
             i += p;
 
