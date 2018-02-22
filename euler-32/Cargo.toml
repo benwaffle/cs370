@@ -1,0 +1,6 @@
+[package]
+name = "euler-32"
+version = "0.1.0"
+authors = ["Ben Iofel <iofelben@gmail.com>"]
+
+[dependencies]
