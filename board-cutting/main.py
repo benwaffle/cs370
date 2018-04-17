@@ -15,9 +15,9 @@ def index(arr, elem):
         return -1
 
 def boardCutting(cost_y, cost_x):
-    cuts_y = [1]*len(cost_y)
+    cuts_y = 1
     cost_y.sort(reverse=True)
-    cuts_x = [1]*len(cost_x)
+    cuts_x = 1
     cost_x.sort(reverse=True)
 
     cuts_needed = len(cost_x) + len(cost_y)
@@ -26,55 +26,42 @@ def boardCutting(cost_y, cost_x):
     while not iters == cuts_needed:
         iters += 1
         #print('==============')
-        #print('Costs:', cost_y, cost_x)
+        #print('Costs:', cost_x, cost_y)
+
+        def cuty():
+            nonlocal cost
+            nonlocal cuts_x
+            nonlocal cuts_y
+            nonlocal cost_y
+            #print('CUTTING ACROSS Y', cuts_y, 'cost = ', cost_y[0])
+            cost += cuts_y * cost_y[0]
+            cuts_x += 1
+            cost_y.pop(0)
+
+        def cutx():
+            nonlocal cost
+            nonlocal cuts_x
+            nonlocal cuts_y
+            nonlocal cost_x
+            #print('CUTTING ACROSS X', cuts_x, 'cost = ', cost_x[0])
+            cost += cuts_x * cost_x[0]
+            cuts_y += 1
+            cost_x.pop(0)
+
+        #if len(cost_x) == 0 or cost_y[0] > cost_x[0] or (cost_y[0] == cost_x[0] and cuts_y < cuts_x):
 
         if len(cost_x) == 0:
-            largestCost = cost_y[0]
+            cuty()
         elif len(cost_y) == 0:
-            largestCost = cost_x[0]
+            cutx()
+        elif cost_y[0] > cost_x[0]:
+            cuty()
+        elif cost_y[0] < cost_x[0]:
+            cutx()
+        elif cuts_y < cuts_x:
+            cuty()
         else:
-            largestCost = max(cost_x[0], cost_y[0])
-
-        #print('largest cost', largestCost)
-
-        smallestCutY = -1
-        for i, c in enumerate(cost_y):
-            if c != largestCost:
-                break
-            if smallestCutY == -1 or cuts_y[i] < cuts_y[smallestCutY]:
-                smallestCutY = i
-
-        smallestCutX = -1
-        for i, c in enumerate(cost_x):
-            if c != largestCost:
-                break
-            if smallestCutX == -1 or cuts_x[i] < cuts_x[smallestCutX]:
-                smallestCutX = i
-
-        #if smallestCutY != -1:
-        #    print('smallest y cuts', cuts_y[smallestCutY], 'piece')
-        #if smallestCutX != -1:
-        #    print('smallest x cuts', cuts_x[smallestCutX], 'piece')
-
-        assert smallestCutY == -1 or cost_y[smallestCutY] == largestCost
-        assert smallestCutX == -1 or cost_x[smallestCutX] == largestCost
-
-        if smallestCutX == -1 or (smallestCutY != -1 and cuts_y[smallestCutY] < cuts_x[smallestCutX]):
-            #print('CUTTING ACROSS Y', smallestCutY, 'cost = ', largestCost)
-            cost += cuts_y[smallestCutY] * largestCost
-            for i in range(len(cuts_x)):
-                cuts_x[i] += 1
-
-            cost_y.pop(0)
-            cuts_y.pop(0)
-        else:
-            #print('CUTTING ACROSS X', smallestCutX, 'cost = ', largestCost)
-            cost += cuts_x[smallestCutX] * largestCost
-            for i in range(len(cuts_y)):
-                cuts_y[i] += 1
-
-            cost_x.pop(0)
-            cuts_x.pop(0)
+            cutx()
 
     return cost % (10**9 + 7)
 
